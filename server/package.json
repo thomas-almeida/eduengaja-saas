@@ -6,18 +6,22 @@
   "scripts": {
     "dev": "ts-node ./src/index.ts",
     "build": "tsc",
-    "start": "node ./dist/index.js"
+    "start": "ts-node-dev --respawn --transpile-only --exit-child src/server.ts",
+    "db:migrate": "npx prisma migrate dev --name user-entity --create-only && npx prisma generate",
+    "db:push": "npx prisma db push"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^5.16.1",
     "@types/node": "^20.14.9",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "typescript": "^5.5.2"
   },
   "devDependencies": {
+    "prisma": "^5.16.1",
     "ts-node": "^10.9.2"
   }
 }
