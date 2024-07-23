@@ -1,12 +1,12 @@
-import { Unity } from "./school"
+import { Unit } from "./school"
 
 // Usuário
 export type User = {
     id: number,
     name: string,
     password: string,
-    unity: Unity,
-    role: Role
+    unitId: number,
+    roleId: number
 }
 
 // Cargo

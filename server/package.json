@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "./src/index.ts",
-  "type": "module",
   "scripts": {
     "dev": "ts-node ./src/index.ts",
     "build": "tsc",
-    "start": "ts-node-dev --respawn --transpile-only --exit-child src/server.ts",
+    "start": "npx ts-node src/index.ts",
     "db:migrate": "npx prisma migrate dev --name user-entity --create-only && npx prisma generate",
     "db:push": "npx prisma db push"
   },
@@ -15,15 +14,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^5.16.1",
-    "@types/node": "^20.14.9",
+    "@prisma/client": "^5.17.0",
     "cors": "^2.8.5",
-    "express": "^4.19.2",
-    "typescript": "^5.5.2"
+    "express": "^4.19.2"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
-    "prisma": "^5.16.1",
-    "ts-node": "^10.9.2"
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.12",
+    "prisma": "^5.17.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
   }
 }

@@ -1,10 +1,10 @@
-import { Class, Unity } from "./school"
+import { Class, Unit } from "./school"
 
 // Matrícula
 export type Registration = {
     id: number,
-    pupil: Pupil,
-    responsible: Responsible,
+    student: Student,
+    guardian: Guardian,
     plots: Plot[],
     address: string,
     cellOne: number,
@@ -12,19 +12,19 @@ export type Registration = {
 }
 
 // Aluno
-export type Pupil = {
+export type Student = {
     registration: Registration,
     name: string,
     rg: number,
     cpf: number,
     classes: Class[],
     frequency: number,
-    unity: Unity,
+    unit: Unit,
     cell: number
 }
 
 // Responsável
-export type Responsible = {
+export type Guardian = {
     name: string,
     rg: number,
     cpf: number,

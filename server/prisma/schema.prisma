@@ -1,14 +1,117 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
 
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  password String
+  unit     Unit?  @relation(fields: [unitId], references: [id])
+  unitId   Int?
+  roleId   Int?
+}
+
+model Guardian {
+  id      Int    @id @default(autoincrement())
+  name    String
+  cpf     String
+  kinship String
+  phone   String
+
+  Registration Registration[]
+}
+
+model Student {
+  id     Int    @id @default(autoincrement())
+  name   String
+  cpf    String
+  rg     String
+  unit   Unit?  @relation(fields: [unitId], references: [id])
+  unitId Int?
+  phone  String
+
+  Record Record[]
+
+  Registration Registration[]
+}
+
+model Detail {
+  id     Int    @id @default(autoincrement())
+  author String
+  unit   Unit?  @relation(fields: [unitId], references: [id])
+  unitId Int?
+  info   String
+
+  Registration Registration[]
+}
+
+model Unit {
+  id            Int            @id @default(autoincrement())
+  name          String
+  registrations Registration[]
+  employees     User[]
+  address       String
+  phone1        String
+  phone2        String
+
+  Student Student[]
+
+  Detail Detail[]
+
+  Class Class[]
+}
+
+model Registration {
+  id           Int       @id @default(autoincrement())
+  student      Student?  @relation(fields: [studentId], references: [id])
+  studentId    Int?
+  guardian     Guardian? @relation(fields: [guardianId], references: [id])
+  guardianId   Int?
+  installments String
+  address      String
+  phone1       String
+  phone2       String
+  details      Detail?   @relation(fields: [detailId], references: [id])
+  detailId     Int?
+
+  Class Class[]
+
+  Unit Unit[]
+}
+
+model Class {
+  id            Int            @id @default(autoincrement())
+  registrations Registration[]
+  startDate     String
+  endDate       String
+  attendance    String
+  unit          Unit?          @relation(fields: [unitId], references: [id])
+  unitId        Int?
+  teachers      String
+  records       Record[]
+}
+
+model Record {
+  id         Int      @id @default(autoincrement())
+  class      Class?   @relation(fields: [classId], references: [id])
+  classId    Int?
+  student    Student? @relation(fields: [studentId], references: [id])
+  studentId  Int?
+  course     Course?  @relation(fields: [courseId], references: [id])
+  courseId   Int?
+  attendance String
+}
+
+model Course {
+  id      Int    @id @default(autoincrement())
+  name    String
+  classes String
+  price   String
+
+  Record Record[]
 }

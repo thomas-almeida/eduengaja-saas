@@ -1,4 +1,4 @@
-import { Pupil, Registration } from "./registration"
+import { Student, Registration } from "./registration"
 import { User } from "./user"
 
 // Turma
@@ -9,7 +9,7 @@ export type Class = {
     beginIn: Date,
     endIn: Date,
     frequency: number,
-    unity: Unity,
+    unit: Unit,
     guidelines: Guideline,
     teachers: User[]
 }
@@ -18,12 +18,12 @@ export type Class = {
 export type Guideline = {
     id: number,
     class: Class,
-    pupil: Pupil,
+    student: Student,
     frequency: number
 }
 
 //Unidade
-export type Unity = {
+export type Unit = {
     id: number,
     name: string,
     Registrations: Registration[],
