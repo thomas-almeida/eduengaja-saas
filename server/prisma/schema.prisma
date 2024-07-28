@@ -17,26 +17,23 @@ model User {
 }
 
 model Guardian {
-  id      Int    @id @default(autoincrement())
-  name    String
-  cpf     String
-  kinship String
-  phone   String
-
+  id           Int            @id @default(autoincrement())
+  name         String
+  cpf          String         @unique
+  kinship      String
+  phone        String
   Registration Registration[]
 }
 
 model Student {
-  id     Int    @id @default(autoincrement())
-  name   String
-  cpf    String
-  rg     String
-  unit   Unit?  @relation(fields: [unitId], references: [id])
-  unitId Int?
-  phone  String
-
-  Record Record[]
-
+  id           Int            @id @default(autoincrement())
+  name         String
+  cpf          String         @unique
+  rg           String
+  unit         Unit?          @relation(fields: [unitId], references: [id])
+  unitId       Int?
+  phone        String
+  Record       Record[]
   Registration Registration[]
 }
 
@@ -58,30 +55,27 @@ model Unit {
   address       String
   phone1        String
   phone2        String
-
-  Student Student[]
-
-  Detail Detail[]
-
-  Class Class[]
+  Detail        Detail[]
+  Class         Class[]
+  Student       Student[]
 }
 
 model Registration {
-  id           Int       @id @default(autoincrement())
-  student      Student?  @relation(fields: [studentId], references: [id])
-  studentId    Int?
-  guardian     Guardian? @relation(fields: [guardianId], references: [id])
-  guardianId   Int?
-  installments String
-  address      String
-  phone1       String
-  phone2       String
-  details      Detail?   @relation(fields: [detailId], references: [id])
-  detailId     Int?
-
-  Class Class[]
-
-  Unit Unit[]
+  id         Int       @id @default(autoincrement())
+  student    Student?  @relation(fields: [studentId], references: [id])
+  studentId  Int?
+  guardian   Guardian? @relation(fields: [guardianId], references: [id])
+  guardianId Int?
+  address    String
+  phone1     String
+  phone2     String
+  details    Detail?   @relation(fields: [detailId], references: [id])
+  detailId   Int?
+  plots      Plots[]
+  Class      Class[]
+  Unit       Unit      @relation(fields: [unitId], references: [id])
+  unitId     Int
+  Record     Record[]
 }
 
 model Class {
@@ -97,14 +91,16 @@ model Class {
 }
 
 model Record {
-  id         Int      @id @default(autoincrement())
-  class      Class?   @relation(fields: [classId], references: [id])
-  classId    Int?
-  student    Student? @relation(fields: [studentId], references: [id])
-  studentId  Int?
-  course     Course?  @relation(fields: [courseId], references: [id])
-  courseId   Int?
-  attendance String
+  id             Int           @id @default(autoincrement())
+  class          Class?        @relation(fields: [classId], references: [id])
+  classId        Int?
+  course         Course?       @relation(fields: [courseId], references: [id])
+  courseId       Int?
+  attendance     String
+  Student        Student?      @relation(fields: [studentId], references: [id])
+  studentId      Int?
+  Registration   Registration? @relation(fields: [registrationId], references: [id])
+  registrationId Int?
 }
 
 model Course {
@@ -114,4 +110,15 @@ model Course {
   price   String
 
   Record Record[]
+}
+
+model Plots {
+  id             Int           @id @default(autoincrement())
+  value          Float
+  dueDate        DateTime
+  createdData    DateTime
+  status         String
+  sendMethod     String
+  Registration   Registration? @relation(fields: [registrationId], references: [id])
+  registrationId Int?
 }
